@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  elasticsearch:
+    image: "elasticsearch:7.14.2"
+    ports:
+     - "9200:9200"
+     - "9300:9300"
+    environment:
+     - "discovery.type=single-node"
+    volumes:
+     - data01:/usr/share/elasticsearch/data
+    networks:
+     - recipes_network
+  kibana:
+    image: "kibana:7.14.2"
+    ports:
+     - "5601:5601"
+    networks:
+     - recipes_network
+volumes:
+  data01:
+networks:
+  recipes_network:
