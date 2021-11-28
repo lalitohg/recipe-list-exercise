@@ -1,0 +1,43 @@
+{
+  "dependencies": {
+    "@elastic/elasticsearch": "^7.15.0",
+    "cookie-session": "^1.4.0",
+    "env": "^0.0.2",
+    "express": "^4.17.1",
+    "express-bunyan-logger": "^1.3.3",
+    "express-graphql": "^0.12.0",
+    "express-session": "^1.17.2",
+    "graphql": "^15.7.2",
+    "graphql-tools": "^8.2.0",
+    "helmet": "^4.6.0",
+    "npm": "^8.1.0"
+  },
+  "name": "recipes_api",
+  "version": "1.0.0",
+  "description": "Demo API for recipe handling",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "seed": "node scripts/seed.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lalitohg/recipe-list-exercise.git"
+  },
+  "keywords": [
+    "recipe",
+    "API",
+    "back-end"
+  ],
+  "author": "Eduardo HG",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/lalitohg/recipe-list-exercise/issues"
+  },
+  "homepage": "https://github.com/lalitohg/recipe-list-exercise#readme",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^9.1.3"
+  }
+}

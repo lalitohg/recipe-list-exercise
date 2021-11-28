@@ -1,5 +1,16 @@
 version: '3.8'
 services:
+  api:
+    image: "node:16-bullseye"
+    volumes:
+      - $PWD/api:/usr/src/app
+    networks:
+      - recipes_network
+    ports:
+      - 3000:3000
+    init: true
+    working_dir: "/usr/src/app"
+    command: "npm start"
   elasticsearch:
     image: "elasticsearch:7.14.2"
     ports:
