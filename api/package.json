@@ -18,6 +18,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "create_index": "node scripts/create_index.js",
     "seed": "node scripts/seed.js",
     "test": "test"
   },

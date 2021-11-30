@@ -1,8 +1,7 @@
-const crypto = require('crypto');
 const environmentConf = require('../config/environment');
 const elasticsearchConf = require('../config/elasticsearch');
 const seedingData = require('../seeds/recipes.json');
-const { result } = require('lodash');
+const { keyword } = require('color-convert');
 
 let esClient = null;
 
@@ -22,23 +21,28 @@ const main = async () => {
     try {
         await setup();
         esClient = elasticsearchConf.getClient();
-        let result = await Promise.all(
-            seedingData.map(({ title, ingredients }) => esClient.create({
-                id: crypto.randomUUID({ disableEntropyCache: false }),
-                index: "recipes",
-                wait_for_active_shards: "1",
-                refresh: 'true',
-                body: {
-                    title,
-                    ingredients
+        let result = await esClient.indices.create({
+            index: "recipes",
+            include_type_name: false,
+            wait_for_active_shards: "1",
+            body: {
+                mappings: {
+                    properties: {
+                        title: { type: "text" },
+                        ingredients: { type: "keyword" }
+                    }
                 }
-            }))
-        );
+            }
+        });
+        if (result.statusCode === 200) {
+            console.log('All done');
+        } else {
+            console.log('Something was wrong creating the index. See info below');
+            console.log(result);
+        }
     } catch (error) {
         console.error(error)
     }
-
-    console.log(`${result.length} new documents were created`);
 }
 
 main();
