@@ -1,6 +1,13 @@
+const dotenv = require('dotenv');
+
 module.exports = () => {
     return new Promise((resolve, reject) => {
-        console.log('Environment loaded');
-        return resolve(true);
+        try {
+            dotenv.config();
+            console.log('Environment vars loaded');
+            return resolve();
+        } catch (error) {
+            reject(error)
+        }
     });
 }

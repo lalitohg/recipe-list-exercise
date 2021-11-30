@@ -8,7 +8,7 @@ module.exports = async () => {
     try {
         await environmentConf();
         await bunyanConf();
-        await elasticsearchConf();
+        await elasticsearchConf.setup();
         await graphqlConf();
         await expressConf();
     } catch(e) {

@@ -10,7 +10,14 @@ services:
       - 3000:3000
     init: true
     working_dir: "/usr/src/app"
+    depends_on:
+      - "elasticsearch"
     command: "npm start"
+    deploy:
+      restart_policy:
+        delay: "5s"
+        max_attempts: 5
+
   elasticsearch:
     image: "elasticsearch:7.14.2"
     ports:
