@@ -2,8 +2,7 @@ const isEmptyEngridentList = ingredients => {
     return (!ingredients || !ingredients.length);
 }
 
-const getAllRecipes = async () => {
-    const esClient = require('../db/clients/elasticsearch').getClient();
+const getAllRecipes = async (esClient) => {
     const result = await esClient.search({
         index: 'recipes',
         body: {
@@ -12,7 +11,21 @@ const getAllRecipes = async () => {
             }
         }
     });
-    return result.body.hits.hits.map(hit => ({id: hit._id, ...hit._source}));
+    return result.body.hits.hits.map(hit => ({ id: hit._id, ...hit._source }));
+}
+
+const getRecipesByTitle = async (esClient, title) => {
+    const result = await esClient.search({
+        index: 'recipes',
+        body: {
+            query: {
+                match: {
+                    title
+                }
+            }
+        }
+    });
+    return result.body.hits.hits.map(hit => ({ id: hit._id, ...hit._source }));
 }
 
 const Recipe = {
@@ -22,11 +35,15 @@ const Recipe = {
 };
 
 const recipes = async (parent, { title, ingredients, limit }) => {
-    if (!title  && isEmptyEngridentList(ingredients)) {
-        // TODO - implement pagination and sorting
-        const result = await getAllRecipes();
-        return result;
+    // TODO - implement pagination and sorting
+    const esClient = require('../db/clients/elasticsearch').getClient();
+
+    if (!title && isEmptyEngridentList(ingredients)) {
+        return await getAllRecipes(esClient);
+    } else if (title) {
+        return await getRecipesByTitle(esClient, title);
     }
+
     return []; // TODO - implement filtering
 }
 
