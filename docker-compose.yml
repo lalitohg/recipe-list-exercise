@@ -7,12 +7,13 @@ services:
     networks:
       - recipes_network
     ports:
-      - 3000:3000
+      - 3000:$API_PORT
+      - "9229:9229"
     init: true
     working_dir: "/usr/src/app"
     depends_on:
       - "elasticsearch"
-    command: "npm start"
+    command: "npm run start"
     deploy:
       restart_policy:
         delay: "5s"

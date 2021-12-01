@@ -8,10 +8,11 @@ module.exports = async () => {
     try {
         await environmentConf();
         await bunyanConf();
-        await elasticsearchConf.setup();
-        await graphqlConf();
-        await expressConf();
-    } catch(e) {
-        console.log('Errors during initial setup: ', e);
+        await elasticsearchConf();
+        const schema = await graphqlConf();
+        await expressConf(schema);
+    } catch(error) {
+        console.error('Errors during initial setup: ', error);
+        process.exit(1);
     }
 }
