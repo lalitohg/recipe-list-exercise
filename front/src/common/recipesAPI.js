@@ -31,11 +31,16 @@ function getRecipesByTitleQuery(title) {
 
 function getRecipesByIngredientsQuery(ingredients) {
     return JSON.stringify({
-        query: ``,
+        query: `query($ingredients: [String]) {
+            Recipes(ingredients: $ingredients){
+              id,
+              title,
+              ingredients
+            }
+          }`,
         variables: { ingredients }
     });
 }
-
 
 async function makeAPIRequest(body) {
     const response = await fetch(REQUEST_URL, { ...reqSettings, body });
