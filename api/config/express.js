@@ -1,5 +1,6 @@
 const express = require("express");
 const helmet = require('helmet');
+const cors = require('cors');
 const { graphqlHTTP } = require("express-graphql");
 
 const graphqlEndpointSetup = (app, schema) => {
@@ -25,7 +26,8 @@ module.exports = (schema) => {
         try {
             const { API_PORT } = process.env;
             let app = express();
-            
+
+            app.use(cors());            
             applySecurityMiddleware(app);
             graphqlEndpointSetup(app, schema);
             

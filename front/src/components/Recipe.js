@@ -7,19 +7,20 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import './Recipe.css';
 
-function Recipe() {
+function Recipe({id, title, ingredients}) {
+    const mapIngredients = ingredients => {
+        return ingredients.map((ingredient, index) => <Typography id={`${ingredient}_${index}`}>{ingredient}</Typography>);
+    };
+
     return (
-        <Grid item xs={12} sm={6} md={3}>
+        <Grid id={id} item xs={12} sm={6} md={3}>
             <Card variant="outlined">
                 <CardActionArea>
                     <CardContent className="recipe-content">
-                        <Typography gutterBottom variant="h4" component="div">Title</Typography>
+                        <Typography gutterBottom variant="h4" component="div">{title}</Typography>
                         <Typography gutterBottom variant="h5" component="div">Ingredients:</Typography>
                         <Stack direction="column" spacing={1}>
-                            <Typography>Ingredient</Typography>
-                            <Typography>Ingredient</Typography>
-                            <Typography>Ingredient</Typography>
-                            <Typography>Ingredient</Typography>
+                            { mapIngredients(ingredients) }
                         </Stack>
                     </CardContent>
                 </CardActionArea>

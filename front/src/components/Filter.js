@@ -8,13 +8,24 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import './Filter.css';
 
 function Filter() {
+    const [searchTerm, setSearchTerm] = React.useState('');
     const [searchFieldName, setSearchFieldName] = React.useState('title');
 
-    const handleFieldNameChange = (event, newFieldName) => {}
+    const handleFieldNameChange = (event, newFieldName) => {
+        setSearchFieldName(newFieldName);
+    }
+
+    const handleSearchClick = () => {}
 
     return (
         <Stack className="filter" direction="row" spacing={1}>
-            <TextField id="search-term" label="Filter" variant="standard" aria-label="search term" />
+            <TextField
+                id="search-term"
+                label="Filter"
+                variant="standard"
+                aria-label="search term"
+                onChange={(event, newTerm) => setSearchTerm(newTerm)}
+            />
             <ToggleButtonGroup
                 value={searchFieldName}
                 exclusive
@@ -24,7 +35,7 @@ function Filter() {
                 <ToggleButton value="title" aria-label="search in title">Title</ToggleButton>
                 <ToggleButton value="ingredients" aria-label="search in ingredients">Ingredients</ToggleButton>
             </ToggleButtonGroup>
-            <IconButton aria-label="search">
+            <IconButton aria-label="search" onClick={handleSearchClick}>
                 <SearchIcon />
             </IconButton>
         </Stack>
