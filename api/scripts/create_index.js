@@ -1,15 +1,12 @@
 const environmentConf = require('../config/environment');
 const elasticsearchConf = require('../config/elasticsearch');
-const seedingData = require('../seeds/recipes.json');
-const { keyword } = require('color-convert');
-
-let esClient = null;
+const esClient = require('../db/clients/elasticsearch');
 
 const setup = async () => {
     return new Promise(async (resolve, reject) => {
         try {
             await environmentConf();
-            await elasticsearchConf.setup();
+            await elasticsearchConf();
             return resolve();
         } catch (error) {
             reject(error);
@@ -20,8 +17,8 @@ const setup = async () => {
 const main = async () => {
     try {
         await setup();
-        esClient = elasticsearchConf.getClient();
-        let result = await esClient.indices.create({
+        const client = esClient.getClient();
+        let result = await client.indices.create({
             index: "recipes",
             include_type_name: false,
             wait_for_active_shards: "1",
