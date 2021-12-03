@@ -31,7 +31,7 @@ Now you can open up your web browser and visit:
 
 Web app: http://localhost:3000
 
-GraphiQl app (if _NODE_ENV_ is set to __dev__ in _./api/.env): http://localhost:4000/graphql
+GraphiQl app (if _NODE_ENV_ is set to __dev__ in _./api/.env_): http://localhost:4000/graphql
 
 Kibana app: http://localhost:5601/
 
